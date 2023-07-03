@@ -80,33 +80,6 @@ const filterAndSearchOnPage = () => {
     const search = document.querySelector('.search-wrapper_input');
     const searchBtn = document.querySelector('.search-btn');
 
-    discountCheckbox.addEventListener('change', () => {
-        cards.forEach(card => {
-            if (discountCheckbox.checked) {
-                if (!card.querySelector('.card-sale')) {
-                    card.parentNode.style.display = 'none';
-                }
-            } else {
-                card.parentNode.style.display = 'block';
-            }
-        });
-    });
-
-    const filterPrice = () => {
-        cards.forEach(card => {
-            const cardPrice = card.querySelector('.card-price');
-            const price = parseFloat(cardPrice.textContent);
-            if ((min.value && price < min.value) || (max.value && price > max.value)) {
-                card.parentNode.style.display = 'none';
-            } else {
-                card.parentNode.style.display = 'block';
-            }
-        });
-    };
-
-    min.addEventListener('change', filterPrice);
-    max.addEventListener('change', filterPrice);
-
     searchBtn.addEventListener('click', () => {
         const searchText = new RegExp(search.value.trim(), 'i');
         cards.forEach(card => {
@@ -119,6 +92,24 @@ const filterAndSearchOnPage = () => {
         });
     });
 
+    const filter = () => {
+        cards.forEach(card => {
+            const cardPrice = card.querySelector('.card-price');
+            const price = parseFloat(cardPrice.textContent);
+            const discount = card.querySelector('.card-sale');
+            if ((min.value && price < min.value) || (max.value && price > max.value)) {
+                card.parentNode.style.display = 'none';
+            } else if (discountCheckbox.checked && !discount) {
+                card.parentNode.style.display = 'none';
+            } else {
+                card.parentNode.style.display = 'block';
+            }
+        });
+    };
+
+    min.addEventListener('change', filter);
+    max.addEventListener('change', filter);
+    discountCheckbox.addEventListener('change', filter);
 };
 
 toggleCheckbox();
