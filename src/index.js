@@ -87,7 +87,7 @@ const filterAndSearchOnPage = () => {
             if (!searchText.test(title.textContent)) {
                 card.parentNode.style.display = 'none';
             } else {
-                card.parentNode.style.display = 'block';
+                card.parentNode.style.display = '';
             }
         });
     });
@@ -102,7 +102,7 @@ const filterAndSearchOnPage = () => {
             } else if (discountCheckbox.checked && !discount) {
                 card.parentNode.style.display = 'none';
             } else {
-                card.parentNode.style.display = 'block';
+                card.parentNode.style.display = '';
             }
         });
     };
